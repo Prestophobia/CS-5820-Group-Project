@@ -1,0 +1,3 @@
+CLEAN = 0
+DIRTY = 1
+WALL = 2
