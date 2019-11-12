@@ -5,11 +5,13 @@ from agent import *
 class SimpleReflexAgent(Agent):
     def __init__(self, startingPos, startingDir, environ):
         super().__init__(startingPos, startingDir, environ)
+        self.AgentTypeName = "Simple Reflex Agent"
 
     def Run(self):
         running = True
-        print("agent starting position: x:{} y:{}".format(self.Position[0],self.Position[1]))
-        print("agent starting direction: x:{} y:{}".format(self.DirFacingVec[0],self.DirFacingVec[1]))
+        if self.PrintMovements:
+            print("agent starting position: x:{} y:{}".format(self.Position[0],self.Position[1]))
+            print("agent starting direction: x:{} y:{}".format(self.DirFacingVec[0],self.DirFacingVec[1]))
         while running:
 
             self.GetPercept()

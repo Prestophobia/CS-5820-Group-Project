@@ -1,8 +1,10 @@
 from directions import *
 from states import *
 from actions import *
+from environment import *
 
 class Agent:
+    AgentTypeName = "Blank Agent"
     Status = CLEAN
     FacingTile = CLEAN
 
@@ -10,10 +12,27 @@ class Agent:
     DirFacingVec = NORTH
     Environ = None
 
+    StartingPos = (0,0)
+    StartingDir = NORTH
+
+    PrintMovements = False
+    PrintCollisions = False
+
+    Log = []
+
     def __init__(self, startingPos, startingDir, environ):
+        self.StartingPos = startingPos
         self.Position = startingPos
+        self.StartingDir = startingDir
         self.DirFacingVec = startingDir
         self.Environ = environ
+
+    def Reset(self):
+        self.Position = self.StartingPos
+        self.DirFacingVec = self.StartingDir
+        self.Log.clear()
+        self.Environ.Reset()
+        return self
 
     def GetPercept(self):
         self.Status = self.Environ.GetTile(x=self.Position[0],y=self.Position[1])
@@ -21,23 +40,22 @@ class Agent:
 
     def Rotate(self, dir):
         self.DirFacingVec = RotateDirVec45Deg(self.DirFacingVec,dir)
-
-        if print_rotations:
-            if dir == CW:
-                print("agent rotated 45 degrees clockwise")
-            elif dir == CCW:
-                print("agent rotated 45 degrees counterclockwise")
-            print("agent direction: x:{} y:{}".format(self.DirFacingVec[0],self.DirFacingVec[1]))
+        if dir == CW:
+            self.Log.append("agent rotated 45 degrees clockwise")
+        elif dir == CCW:
+            self.Log.append("agent rotated 45 degrees counterclockwise")
+        self.Log.append("agent direction: x:{} y:{}".format(self.DirFacingVec[0],self.DirFacingVec[1]))
+           
 
     def MoveForward(self):
         newX = self.Position[0] + self.DirFacingVec[0]
         newY = self.Position[1] + self.DirFacingVec[1]
         if not self.Environ.Collide((newX,newY)):
             self.Position = (self.Position[0] + self.DirFacingVec[0],self.Position[1] + self.DirFacingVec[1])
-            print("agent position: x:{} y:{}".format(self.Position[0],self.Position[1]))
+            self.Log.append("agent position: x:{} y:{}".format(self.Position[0],self.Position[1]))
             return True
         else:
-            print("agent collided")
+            self.Log.append("agent collided")
             return False
 
     def CleanTile(self):
@@ -46,3 +64,37 @@ class Agent:
 
     def Run(self):
         return
+    
+    def RunNTimes(self,n):
+        cleanTotal = 0
+        cleanMax = 0
+        cleanMin = 100
+
+        stepsTotal = 0
+        stepsMax = 0
+        stepsMin = 100
+
+        for i in range(n):
+            self.Run()
+            results = self.Environ.GetPerformanceMeasure()
+            #print(results)
+            cleanTotal += results['percentClean']
+            if results['percentClean'] > cleanMax:
+                cleanMax = results['percentClean']
+            if results['percentClean'] < cleanMin:
+                cleanMin = results['percentClean']
+
+            stepsTotal += results['numTurns']
+            if results['numTurns'] > stepsMax:
+                stepsMax = results['numTurns']
+            if results['numTurns'] < stepsMin:
+                stepsMin = results['numTurns']
+
+            self.Reset()
+        cleanAverage = cleanTotal/n
+        stepsAverage = stepsTotal/n
+        return {"cleanAvg":cleanAverage,"cleanMax":cleanMax,"cleanMin":cleanMin,"stepsAvg":stepsAverage,"stepsMax":stepsMax,"stepsMin":stepsMin}
+
+    def PrintLog(self):
+        for entry in self.Log:
+            print(entry)

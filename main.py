@@ -86,13 +86,22 @@ def main():
     vacuumWorld = Environment(envWidth,envHeight)
     vacuumWorld.RandomizeWithoutWalls()
 
+    reflexAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
+    #print(SimpleReflexAgent.AgentTypeName)
+
     vacuumWorld.Visualize()
     print("")
-    reflexAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
+    
     reflexAgent.Run()
+    reflexAgent.PrintLog()
 
     print("")
     vacuumWorld.Visualize()
+
+    results=reflexAgent.RunNTimes(100)
+
+    print("\n\nPercent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
+    print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
 
     print("done")
 

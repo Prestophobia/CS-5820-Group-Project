@@ -20,6 +20,11 @@ class Environment:
                 newCol.append(CLEAN)
             self.Grid.append(newCol)
 
+    def Reset(self):
+        self.NumCollisions = 0
+        self.NumTurns = 0
+        self.RandomizeWithoutWalls()
+
     def GetTile(self,x,y):
         if x >= self.Width or y >= self.Height or x < 0 or y < 0:
             return WALL
@@ -56,12 +61,21 @@ class Environment:
             for y in range(self.Height):
                 self.SetTile(x,y,random.randint(CLEAN,DIRTY))
         self.InitialDirtyAmount = self.CountDirty()
+        if self.InitialDirtyAmount == 0:
+            self.RandomizeWithoutWalls()
 
     def RandomizeWithWalls(self):
         for x in range(self.Width):
             for y in range(self.Height):
                 self.SetTile(x,y,random.randint(CLEAN,WALL))
         self.InitialDirtyAmount = self.CountDirty()
+        if self.InitialDirtyAmount == 0:
+            self.RandomizeWithWalls()
+
+    
+    def GetPerformanceMeasure(self):
+        perfmeasure = {"collisions":self.NumCollisions,"numTurns":self.NumTurns,"percentClean":self.GetPercentClean()}
+        return perfmeasure
 
     def Visualize(self):
         print("visualizing w:{}, h:{}".format(self.Width,self.Height))
