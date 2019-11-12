@@ -77,7 +77,13 @@ def main():
     elif exercise == '2.12b':
         print('2.12b')
 
-    vacuumWorld = Environment(10,10)
+    if type(envWidth) is list:
+        envWidth = envWidth[0]
+
+    if type(envHeight) is list:
+        envHeight = envHeight[0]
+    
+    vacuumWorld = Environment(envWidth,envHeight)
     vacuumWorld.RandomizeWithoutWalls()
 
     vacuumWorld.Visualize()
