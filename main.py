@@ -8,6 +8,24 @@ from zig_zag_vacuum import *
 
 from directions import *
 
+def twoPointTen(envWidth,envHeight):
+        vacuumWorld = Environment(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("Example run of simple reflex agent")
+        vacuumWorld.Visualize()
+        reflexAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
+        reflexAgent.Run()
+        reflexAgent.PrintLog()
+        vacuumWorld.Visualize()
+
+        print("\nResults of running through all possible variations:")
+        results=reflexAgent.RunAllEnvironVariations()
+
+        print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
+        print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
+        print("Score\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["scoreAvg"],results["scoreMin"],results["scoreMax"]))
+    
+
 def main():
     parser = argparse.ArgumentParser(
         prog=sys.argv[0],
@@ -20,7 +38,7 @@ def main():
     parser.add_argument(
         "--width",
         nargs=1,
-        default=3,
+        default=2,
         type=int,
         # choices=range(0,100),
         help="specify the width of the grid. defaults to 3",
@@ -29,7 +47,7 @@ def main():
     parser.add_argument(
         "--height",
         nargs=1,
-        default=3,
+        default=1,
         type=int,
         # choices=range(0,100),
         help="specify the height of the grid. defaults to 3",
@@ -54,12 +72,40 @@ def main():
     envHeight = args.height
     exercise = args.exercise
 
+    if type(envWidth) is list:
+        envWidth = envWidth[0]
+
+    if type(envHeight) is list:
+        envHeight = envHeight[0]
+
     if exercise == '2.8':
         print('2.8')
+        print("Random version of vacuum world, where 1 is dirty and 0 is clean.")
+        vacuumWorld = Environment(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        vacuumWorld.Visualize()
     elif exercise == '2.9':
         print('2.9')
+        vacuumWorld = Environment(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("Example run of simple reflex agent")
+        vacuumWorld.Visualize()
+        reflexAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
+        reflexAgent.Run()
+        reflexAgent.PrintLog()
+        vacuumWorld.Visualize()
+        print()
+        print("Results of running through all possible variations:")
+        results=reflexAgent.RunAllEnvironVariations()
+
+        print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
+        print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
+        
+
     elif exercise == '2.10a':
         print('2.10a')
+        twoPointTen(envWidth,envHeight)
+
     elif exercise == '2.10b':
         print('2.10b')
     elif exercise == '2.10c':
@@ -77,32 +123,9 @@ def main():
     elif exercise == '2.12b':
         print('2.12b')
 
-    if type(envWidth) is list:
-        envWidth = envWidth[0]
-
-    if type(envHeight) is list:
-        envHeight = envHeight[0]
     
     vacuumWorld = Environment(envWidth,envHeight)
     vacuumWorld.RandomizeWithoutWalls()
-
-    reflexAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
-    #print(SimpleReflexAgent.AgentTypeName)
-
-    vacuumWorld.Visualize()
-    print("")
-    
-    reflexAgent.Run()
-    reflexAgent.PrintLog()
-
-    print("")
-    vacuumWorld.Visualize()
-
-    results=reflexAgent.RunNTimes(100)
-
-    print("\n\nPercent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
-    print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
-
     print("done")
 
 if __name__ == "__main__":

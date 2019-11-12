@@ -34,6 +34,22 @@ class Environment:
     def SetTile(self,x,y,val):
         self.Grid[x][y] = val
 
+    def SetTileByNumber(self,tileNumber,val):
+        y = int(tileNumber/self.Width)
+        x = int(tileNumber%self.Width)
+        self.SetTile(x,y,val)
+
+    def SetGridFromBinary(self,bin):
+        self.NumCollisions = 0
+        self.NumTurns = 0
+        number = bin
+        binDigits = self.Width * self.Height
+        for b in range(0,binDigits):
+            self.SetTileByNumber(b,number%2)
+            number = number // 2
+        self.InitialDirtyAmount = self.CountDirty()
+        return
+
     def Collide(self,pos):
         self.NumTurns += 1
         if pos[0] >= self.Width or pos[1] >= self.Height:
@@ -54,12 +70,15 @@ class Environment:
         return numDirty
 
     def GetPercentClean(self):
+        assert self.CountDirty() <= self.InitialDirtyAmount
+        if self.InitialDirtyAmount <= 0:
+            return 100
         return (1-(self.CountDirty()/self.InitialDirtyAmount)) * 100
 
     def RandomizeWithoutWalls(self):
         for x in range(self.Width):
             for y in range(self.Height):
-                self.SetTile(x,y,random.randint(CLEAN,DIRTY))
+                self.SetTile(x=x,y=y,val=random.randint(CLEAN,DIRTY))
         self.InitialDirtyAmount = self.CountDirty()
         if self.InitialDirtyAmount == 0:
             self.RandomizeWithoutWalls()
@@ -74,7 +93,7 @@ class Environment:
 
     
     def GetPerformanceMeasure(self):
-        perfmeasure = {"collisions":self.NumCollisions,"numTurns":self.NumTurns,"percentClean":self.GetPercentClean()}
+        perfmeasure = {"collisions":self.NumCollisions,"numTurns":self.NumTurns,"percentClean":self.GetPercentClean(),"score":self.GetPercentClean()/max(self.NumTurns,1)}
         return perfmeasure
 
     def Visualize(self):
