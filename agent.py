@@ -76,34 +76,36 @@ class Agent:
         scoreTotal = 0
         scoreMax = 0
         scoreMin = cleanMin
+        for x in range(self.Environ.Width):
+            for y in range(self.Environ.Height):
+                self.StartingPos = (x,y)
+                for i in range(n):
+                    self.Run()
+                    results = self.Environ.GetPerformanceMeasure()
+                    #print(results)
+                    cleanTotal += results['percentClean']
+                    assert results['percentClean']>=0
+                    if results['percentClean'] > cleanMax:
+                        cleanMax = results['percentClean']
+                    if results['percentClean'] < cleanMin:
+                        cleanMin = results['percentClean']
 
-        for i in range(n):
-            self.Run()
-            results = self.Environ.GetPerformanceMeasure()
-            #print(results)
-            cleanTotal += results['percentClean']
-            assert results['percentClean']>=0
-            if results['percentClean'] > cleanMax:
-                cleanMax = results['percentClean']
-            if results['percentClean'] < cleanMin:
-                cleanMin = results['percentClean']
+                    stepsTotal += results['numTurns']
+                    assert results['numTurns']>=0
+                    if results['numTurns'] > stepsMax:
+                        stepsMax = results['numTurns']
+                    if results['numTurns'] < stepsMin:
+                        stepsMin = results['numTurns']
 
-            stepsTotal += results['numTurns']
-            assert results['numTurns']>=0
-            if results['numTurns'] > stepsMax:
-                stepsMax = results['numTurns']
-            if results['numTurns'] < stepsMin:
-                stepsMin = results['numTurns']
+                    scoreTotal += results['score']
+                    assert results['score']>=0
+                    if results['score'] > scoreMax:
+                        scoreMax = results['score']
+                    if results['score'] < scoreMin:
+                        scoreMin = results['score']
 
-            scoreTotal += results['score']
-            assert results['score']>=0
-            if results['score'] > scoreMax:
-                scoreMax = results['score']
-            if results['score'] < scoreMin:
-                scoreMin = results['score']
-
-            self.Reset()
-            self.Environ.Reset()
+                    self.Reset()
+                    self.Environ.Reset()
         cleanAverage = cleanTotal/n
         stepsAverage = stepsTotal/n
         scoreAverage = scoreTotal/n
@@ -123,40 +125,46 @@ class Agent:
         scoreMin = cleanMin
 
         numVariations = 1<<(self.Environ.Width * self.Environ.Height)
+        totalVariations = numVariations * (self.Environ.Width * self.Environ.Height)
         if numVariations > 10000:#prevent program from chugging by approximating
             return self.RunNTimes(10000)
         
-        for b in range(numVariations):
-            #print("binaryNumber: {}".format(b))
-            self.Reset()
-            self.Environ.SetGridFromBinary(b)
-            self.Run()
-            results = self.Environ.GetPerformanceMeasure()
-            #print(results)
-            cleanTotal += results['percentClean']
-            assert results['percentClean']>=0
-            if results['percentClean'] > cleanMax:
-                cleanMax = results['percentClean']
-            if results['percentClean'] < cleanMin:
-                cleanMin = results['percentClean']
+        for x in range(self.Environ.Width):
+            for y in range(self.Environ.Height):
+                self.StartingPos = (x,y)
+                for b in range(numVariations):
+                    #print("binaryNumber: {}".format(b))
+                    self.Reset()
+                    self.Environ.SetGridFromBinary(b)
+                    self.Run()
+                    results = self.Environ.GetPerformanceMeasure()
+                    #print(results)
+                    cleanTotal += results['percentClean']
+                    assert results['percentClean']>=0
+                    if results['percentClean'] > cleanMax:
+                        cleanMax = results['percentClean']
+                    if results['percentClean'] < cleanMin:
+                        cleanMin = results['percentClean']
 
-            stepsTotal += results['numTurns']
-            assert results['numTurns']>=0
-            if results['numTurns'] > stepsMax:
-                stepsMax = results['numTurns']
-            if results['numTurns'] < stepsMin:
-                stepsMin = results['numTurns']
+                    stepsTotal += results['numTurns']
+                    assert results['numTurns']>=0
+                    if results['numTurns'] > stepsMax:
+                        stepsMax = results['numTurns']
+                    if results['numTurns'] < stepsMin:
+                        stepsMin = results['numTurns']
 
-            scoreTotal += results['score']
-            assert results['score']>=0
-            if results['score'] > scoreMax:
-                scoreMax = results['score']
-            if results['score'] < scoreMin:
-                scoreMin = results['score']
+                    scoreTotal += results['score']
+                    assert results['score']>=0
+                    if results['score'] > scoreMax:
+                        scoreMax = results['score']
+                    if results['score'] < scoreMin:
+                        scoreMin = results['score']
 
-        cleanAverage = cleanTotal/numVariations
-        stepsAverage = stepsTotal/numVariations
-        scoreAverage = scoreTotal/numVariations
+        
+
+        cleanAverage = cleanTotal/totalVariations
+        stepsAverage = stepsTotal/totalVariations
+        scoreAverage = scoreTotal/totalVariations
         return {"cleanAvg":cleanAverage,"cleanMax":cleanMax,"cleanMin":cleanMin,"stepsAvg":stepsAverage,"stepsMax":stepsMax,"stepsMin":stepsMin,"scoreAvg":scoreAverage,"scoreMax":scoreMax,"scoreMin":scoreMin}
 
 
