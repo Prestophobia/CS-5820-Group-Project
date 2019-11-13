@@ -4,6 +4,7 @@ import sys
 from environment import *
 from agent import *
 from simple_reflex_agent import *
+from simple_reflex_with_state import *
 from zig_zag_vacuum import *
 
 from directions import *
@@ -24,7 +25,7 @@ def twoPointTen(envWidth,envHeight):
         print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
         print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
         print("Score\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["scoreAvg"],results["scoreMin"],results["scoreMax"]))
-    
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -100,7 +101,7 @@ def main():
 
         print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
         print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
-        
+
 
     elif exercise == '2.10a':
         print('2.10a')
@@ -108,6 +109,15 @@ def main():
 
     elif exercise == '2.10b':
         print('2.10b')
+
+        vacuumWorld = Environment(envWidth, envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("Example run of simple reflex with entire state agent")
+        vacuumWorld.Visualize()
+        reflexAgentEntireState = SimpleReflexAgentWithEntireState((0,0),EAST,vacuumWorld)
+        reflexAgentEntireState.Run()
+        reflexAgentEntireState.PrintDirtyTiles()
+
     elif exercise == '2.10c':
         print('2.10c')
     elif exercise == '2.11a':
@@ -123,7 +133,7 @@ def main():
     elif exercise == '2.12b':
         print('2.12b')
 
-    
+
     vacuumWorld = Environment(envWidth,envHeight)
     vacuumWorld.RandomizeWithoutWalls()
     print("done")
