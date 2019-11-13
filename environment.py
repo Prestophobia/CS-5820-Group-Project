@@ -49,7 +49,7 @@ class Environment:
             number = number // 2
         self.InitialDirtyAmount = self.CountDirty()
         return
-        
+
     def SetWallsFromBinary(self,bin):
         self.NumCollisions = 0
         self.NumTurns = 0
