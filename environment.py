@@ -81,6 +81,12 @@ class Environment:
                     numDirty += 1
         return numDirty
 
+    def GetTileState(self, tile):
+        if self.Grid[tile[0]][tile[1]] == DIRTY:
+            return DIRTY
+        else:
+            return CLEAN
+
     def GetPercentClean(self):
         assert self.CountDirty() <= self.InitialDirtyAmount
         if self.InitialDirtyAmount <= 0:
@@ -103,7 +109,6 @@ class Environment:
         if self.InitialDirtyAmount == 0:
             self.RandomizeWithWalls()
 
-    
     def GetPerformanceMeasure(self):
         perfmeasure = {"collisions":self.NumCollisions,"numTurns":self.NumTurns,"percentClean":self.GetPercentClean(),"score":self.GetPercentClean()/max(self.NumTurns,1)}
         return perfmeasure
