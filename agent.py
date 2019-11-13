@@ -44,7 +44,22 @@ class Agent:
         elif dir == CCW:
             self.Log.append("agent rotated 45 degrees counterclockwise")
         self.Log.append("agent direction: x:{} y:{}".format(self.DirFacingVec[0],self.DirFacingVec[1]))
-           
+
+    def RotateUntil(self, targetDirection):
+        while self.DirFacingVec != targetDirection:
+            self.Rotate(self.GetSmartRotationDirection(self.DirFacingVec, targetDirection))
+        return
+
+    def GetSmartRotationDirection(self, currentDirection, targetDirection):
+        if currentDirection == NORTH and targetDirection == WEST:
+            return CCW
+        if currentDirection == WEST and targetDirection == SOUTH:
+            return CCW
+        if currentDirection == SOUTH and targetDirection == EAST:
+            return CCW
+        if currentDirection == EAST and targetDirection == NORTH:
+            return CCW
+        return CW
 
     def MoveForward(self):
         newX = self.Position[0] + self.DirFacingVec[0]
@@ -63,7 +78,7 @@ class Agent:
 
     def Run(self):
         return
-    
+
     def RunNTimes(self,n):
         cleanTotal = 0
         cleanMax = 0
@@ -125,7 +140,7 @@ class Agent:
         numVariations = 1<<(self.Environ.Width * self.Environ.Height)
         if numVariations > 10000:#prevent program from chugging by approximating
             return self.RunNTimes(10000)
-        
+
         for b in range(numVariations):
             #print("binaryNumber: {}".format(b))
             self.Reset()
