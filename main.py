@@ -1,6 +1,7 @@
+# import libraries for passing arguements at the command line
 import argparse
 import sys
-
+# import all excercise methods
 from environment import *
 from agent import *
 from simple_reflex_agent import *
@@ -8,8 +9,10 @@ from simple_reflex_with_state import *
 from zig_zag_vacuum import *
 from randomAgent import *
 
+# get direction constants for traversing vacuum world 
 from directions import *
 
+#sets up environment and agent for penalized movement
 def twoPointTen(envWidth,envHeight):
         vacuumWorld = Environment(envWidth,envHeight)
         vacuumWorld.RandomizeWithoutWalls()
@@ -19,16 +22,19 @@ def twoPointTen(envWidth,envHeight):
         reflexAgent.Run()
         reflexAgent.PrintLog()
         vacuumWorld.Visualize()
-
+        
+        # print header, run all variations of environment traversal
         print("\nResults of running through all possible variations:")
         results=reflexAgent.RunAllEnvironVariations()
 
+        # print the results from running all environment traversals
         print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
         print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
         print("Score\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["scoreAvg"],results["scoreMin"],results["scoreMax"]))
 
 
 def main():
+    # get all arguements from the command line
     parser = argparse.ArgumentParser(
         prog=sys.argv[0],
         description="Implements a performance-measuring environment simulator " +
@@ -37,6 +43,7 @@ def main():
                     "dirt placement) can be changed easily",
     )
 
+    # getting width of the grid from the command line
     parser.add_argument(
         "--width",
         nargs=1,
@@ -46,6 +53,7 @@ def main():
         help="specify the width of the grid. defaults to 3",
     )
 
+    # getting height of the grid from the command line
     parser.add_argument(
         "--height",
         nargs=1,
@@ -55,6 +63,7 @@ def main():
         help="specify the height of the grid. defaults to 3",
     )
 
+    # getting excercise to run from the command line, either 8, 9, or any parts of 10, 11, or 12
     parser.add_argument(
         "--exercise",
         # nargs=1,
@@ -65,28 +74,38 @@ def main():
         help="specify the exercise to run. defaults to 2.8",
     )
 
+    #error validation for insufficient number of inputs from the command line
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
 
+    # assign variables for width, height, and excercise to use in the program
     args = parser.parse_args()
     envWidth = args.width
     envHeight = args.height
     exercise = args.exercise
 
+     # only gets one width
     if type(envWidth) is list:
         envWidth = envWidth[0]
+    
 
+    # only gets one height
     if type(envHeight) is list:
         envHeight = envHeight[0]
 
+    # checks for which excercise in the book to run
     if exercise == '2.8':
+     # builds a performance measuring environment, a 'vacuum-cleaner world'
         print('2.8')
         print("Random version of vacuum world, where 1 is dirty and 0 is clean.")
         vacuumWorld = Environment(envWidth,envHeight)
         vacuumWorld.RandomizeWithoutWalls()
         vacuumWorld.Visualize()
+        
     elif exercise == '2.9':
+    # builds a simple reflex agent to traverse an environment similar to the one
+    # in excercise 2.8
         print('2.9')
         vacuumWorld = Environment(envWidth,envHeight)
         vacuumWorld.RandomizeWithoutWalls()
@@ -99,17 +118,19 @@ def main():
         print()
         print("Results of running through all possible variations:")
         results=reflexAgent.RunAllEnvironVariations()
-
+     # prints the appropriate value
         print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
         print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
 
 
     elif exercise == '2.10a':
+    # runs the simple reflex agent in the penalized movement environment
         print('2.10a')
         twoPointTen(envWidth,envHeight)
 
 
     elif exercise == '2.10b':
+     # runs a state-based reflex agent in the penalized movement environment
         print('2.10b')
         vacuumWorld = Environment(envWidth, envHeight)
         vacuumWorld.RandomizeWithoutWalls()
@@ -120,9 +141,12 @@ def main():
         reflexAgentEntireState.PrintDirtyTiles()
 
     elif exercise == '2.10c':
+    # TODO: run agent in penalized movement environment such that it can tell when nearby 
+    # squares are also clean/dirty
         print('2.10c')
 
     elif exercise == '2.11a':
+    # TODO: run simple reflex agent in unknown environment
         print('2.11a')
     elif exercise == '2.11b':
         print('2.11b')
@@ -182,6 +206,7 @@ def main():
 
     elif exercise == '2.11c':
         print('2.11c')
+        # environment designed to make our agent not behave rationally
         vacuumWorld = Environment(5,5)
         vacuumWorld.RandomizeWithoutWalls()
         vacuumWorld.SetWallsFromBinary(25056)
@@ -196,10 +221,13 @@ def main():
 
         print("Note how unlikely the agent is to pass around the wall with a 1 tile gap")
     elif exercise == '2.11d':
+        # TODO: Run reflex agent vs state-based agent on multiple environments and run comparison on efficiency
         print('2.11d')
     elif exercise == '2.12a':
+        # TODO: create agent that will give the wrong input on a square being clean or dirty 10% of the time
         print('2.12a')
     elif exercise == '2.12b':
+        # TODO: create agent that will run in environment will clean square has a 10% chance of getting dirty
         print('2.12b')
 
 
