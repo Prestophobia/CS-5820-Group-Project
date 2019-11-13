@@ -34,7 +34,7 @@ class SimpleReflexAgentWithEntireState(Agent):
         closestDistance = sys.maxsize
         for tile in self.DirtyTiles:
             tempDistance = self.CalculateDistanceFromCurrent(tile)
-            if tempDistance < closestDistance:
+            if closestDistance >= tempDistance:
                 closestDistance = tempDistance
                 closestTile = tile
         print("ClosestDirtyTile=" + str(closestTile))

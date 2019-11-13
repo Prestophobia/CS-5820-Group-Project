@@ -50,6 +50,18 @@ class Environment:
         self.InitialDirtyAmount = self.CountDirty()
         return
 
+    def SetWallsFromBinary(self,bin):
+        self.NumCollisions = 0
+        self.NumTurns = 0
+        number = bin
+        binDigits = self.Width * self.Height
+        for b in range(0,binDigits):
+            if (number%2 != 0):
+                self.SetTileByNumber(b,WALL)
+            number = number // 2
+        self.InitialDirtyAmount = self.CountDirty()
+        return
+
     def Collide(self,pos):
         self.NumTurns += 1
         if pos[0] >= self.Width or pos[1] >= self.Height:
@@ -107,5 +119,6 @@ class Environment:
             for x in range (self.Width):
                 print("[{}] ".format(self.GetTile(x,y)),end="")
             print("")
-        print("Collisions: {}, Steps: {}, Percent Cleaned: {}%".format(self.NumCollisions, self.NumTurns,self.GetPercentClean()))
+        perf = self.GetPerformanceMeasure()
+        print("Collisions: {}, Steps: {}, Percent Cleaned: {}% Score: {}".format(perf['collisions'],perf['numTurns'],perf['percentClean'],perf['score']))
         return

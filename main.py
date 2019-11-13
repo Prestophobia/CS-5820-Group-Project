@@ -6,6 +6,7 @@ from agent import *
 from simple_reflex_agent import *
 from simple_reflex_with_state import *
 from zig_zag_vacuum import *
+from randomAgent import *
 
 from directions import *
 
@@ -107,9 +108,9 @@ def main():
         print('2.10a')
         twoPointTen(envWidth,envHeight)
 
+
     elif exercise == '2.10b':
         print('2.10b')
-
         vacuumWorld = Environment(envWidth, envHeight)
         vacuumWorld.RandomizeWithoutWalls()
         print("Example run of simple reflex with entire state agent")
@@ -120,12 +121,80 @@ def main():
 
     elif exercise == '2.10c':
         print('2.10c')
+
     elif exercise == '2.11a':
         print('2.11a')
     elif exercise == '2.11b':
         print('2.11b')
+        #Can a simple reﬂex agent with a randomized agent function outperform a simple reﬂex agent?
+        #Design such an agent and measure its performance on several environments.
+        print('NOTE: 2 in the grid represents a wall')
+        vacuumWorld = Environment(5,5)
+        vacuumWorld.RandomizeWithoutWalls()
+        vacuumWorld.SetWallsFromBinary(9439748)
+        vacuumWorld.Visualize()
+
+        randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
+        randomAgent.Run()
+
+        #randomAgent.PrintLog()
+
+        vacuumWorld.Visualize()
+
+        vacuumWorld = Environment(5,5)
+        vacuumWorld.RandomizeWithoutWalls()
+        vacuumWorld.SetWallsFromBinary(9439748)
+        vacuumWorld.Visualize()
+
+        randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
+        randomAgent.Run()
+
+        #randomAgent.PrintLog()
+
+        vacuumWorld.Visualize()
+        print("*******************************************")
+
+        vacuumWorld = Environment(5,5)
+        vacuumWorld.RandomizeWithoutWalls()
+        vacuumWorld.SetWallsFromBinary(145536)
+        vacuumWorld.Visualize()
+
+        randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
+        randomAgent.Run()
+
+        #randomAgent.PrintLog()
+
+        vacuumWorld.Visualize()
+
+        print("*******************************************")
+
+        vacuumWorld = Environment(5,5)
+        vacuumWorld.RandomizeWithoutWalls()
+        vacuumWorld.SetWallsFromBinary(15360)
+        vacuumWorld.Visualize()
+
+        randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
+        randomAgent.Run()
+
+        #randomAgent.PrintLog()
+
+        vacuumWorld.Visualize()
+
     elif exercise == '2.11c':
         print('2.11c')
+        vacuumWorld = Environment(5,5)
+        vacuumWorld.RandomizeWithoutWalls()
+        vacuumWorld.SetWallsFromBinary(25056)
+        vacuumWorld.Visualize()
+
+        randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
+        randomAgent.Run()
+
+        #randomAgent.PrintLog()
+
+        vacuumWorld.Visualize()
+
+        print("Note how unlikely the agent is to pass around the wall with a 1 tile gap")
     elif exercise == '2.11d':
         print('2.11d')
     elif exercise == '2.12a':
