@@ -51,13 +51,22 @@ class Agent:
         return
 
     def GetSmartRotationDirection(self, currentDirection, targetDirection):
+        # add 45 degree if's
         if currentDirection == NORTH and targetDirection == WEST:
+            return CCW
+        if currentDirection == NORTHWEST and targetDirection == WEST:
             return CCW
         if currentDirection == WEST and targetDirection == SOUTH:
             return CCW
+        if currentDirection == SOUTHWEST and targetDirection == SOUTH:
+            return CCW
         if currentDirection == SOUTH and targetDirection == EAST:
             return CCW
+        if currentDirection == SOUTHEAST and targetDirection == EAST:
+            return CCW
         if currentDirection == EAST and targetDirection == NORTH:
+            return CCW
+        if currentDirection == NORTHEAST and targetDirection == NORTH:
             return CCW
         return CW
 

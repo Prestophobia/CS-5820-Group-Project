@@ -56,6 +56,8 @@ class SimpleReflexAgentWithEntireState(Agent):
         return sqrt(pow((currentX - targetX),2) + pow((currentY - targetY),2))
 
     def GetPathTo(self, target):
+        if target == None:
+            return self.Position
         currentX = self.Position[0]
         currentY = self.Position[1]
         targetX = target[0]
@@ -64,11 +66,13 @@ class SimpleReflexAgentWithEntireState(Agent):
         return ((targetX - currentX),(targetY - currentY))
 
     def MoveTo(self, target):
-        print("Target=" + str(target))
+        if target == None:
+            return
+        # print("Target=" + str(target))
         path = self.GetPathTo(target)
-        print("Path=" + str(path))
+        # print("Path=" + str(path))
         while self.Position != target:
-            print(str(self.Position) + "!=" + str(target))
+            # print(str(self.Position) + "!=" + str(target))
 
             if path[0] > 0:
                 # then we need to move west
@@ -80,18 +84,19 @@ class SimpleReflexAgentWithEntireState(Agent):
                 print("FacingDirection=" + str(self.DirFacingVec))
 
             while self.Position[0] != target[0]: # if no change on x, we don't need to move east or west
-                print(str(self.Position) + " ->" + str(target))
+                print("Trying to move on x: " + str(self.Position) + " ->" + str(target))
                 self.MoveForward()
 
-            if path[1] > 0:
+            if path[1] < 0:
                 # then we need to move north
                 self.RotateUntil(NORTH)
-            elif path[1] < 0:
+            elif path[1] > 0:
                 # then we need to move south
                 self.RotateUntil(SOUTH)
 
             while self.Position[1] != target[1]: # if no change on y, we don't need to move north or south
-                print(str(self.Position) + " ->" + str(target))
+                print("Trying to move on y: " + str(self.Position) + " ->" + str(target))
+                print("Facing Direction=" + str(self.DirFacingVec))
                 self.MoveForward()
         return
 
