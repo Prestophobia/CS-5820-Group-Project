@@ -17,14 +17,14 @@ class SimpleReflexAgentWithEntireState(Agent):
         self.GetDirtyTiles()
 
     def GetDirtyTiles(self):
-        print("finding all dirty tiles")
+        self.Log.append("finding all dirty tiles")
         for x in range(self.Environ.Width):
             for y in range(self.Environ.Height):
                 if self.Environ.GetTileState((x,y)) == DIRTY:
                     self.DirtyTiles.append((x,y))
 
     def PrintDirtyTiles(self):
-        print("printing dirty tiles")
+        self.Log.append("printing dirty tiles")
         print(len(self.DirtyTiles))
         for tile in self.DirtyTiles:
             print(tile)
@@ -37,7 +37,7 @@ class SimpleReflexAgentWithEntireState(Agent):
             if closestDistance >= tempDistance:
                 closestDistance = tempDistance
                 closestTile = tile
-        print("ClosestDirtyTile=" + str(closestTile))
+        self.Log.append("ClosestDirtyTile=" + str(closestTile))
         return closestTile
 
     def RemoveFromKnownDirtyTiles(self, toRemove):
@@ -77,14 +77,14 @@ class SimpleReflexAgentWithEntireState(Agent):
             if path[0] > 0:
                 # then we need to move west
                 self.RotateUntil(WEST)
-                print("FacingDirection=" + str(self.DirFacingVec))
+                self.Log.append("FacingDirection=" + str(self.DirFacingVec))
             elif path[0] < 0:
                 # then we need to move east
                 self.RotateUntil(EAST)
-                print("FacingDirection=" + str(self.DirFacingVec))
+                self.Log.append("FacingDirection=" + str(self.DirFacingVec))
 
             while self.Position[0] != target[0]: # if no change on x, we don't need to move east or west
-                print("Trying to move on x: " + str(self.Position) + " ->" + str(target))
+                self.Log.append("Trying to move on x: " + str(self.Position) + " ->" + str(target))
                 self.MoveForward()
 
             if path[1] < 0:
@@ -95,14 +95,14 @@ class SimpleReflexAgentWithEntireState(Agent):
                 self.RotateUntil(SOUTH)
 
             while self.Position[1] != target[1]: # if no change on y, we don't need to move north or south
-                print("Trying to move on y: " + str(self.Position) + " ->" + str(target))
-                print("Facing Direction=" + str(self.DirFacingVec))
+                self.Log.append("Trying to move on y: " + str(self.Position) + " ->" + str(target))
+                self.Log.append("Facing Direction=" + str(self.DirFacingVec))
                 self.MoveForward()
         return
 
     def Run(self):
         while self.Environ.CountDirty() > 0:
-            print("DirtyCount=" + str(self.Environ.CountDirty()))
+            self.Log.append("DirtyCount=" + str(self.Environ.CountDirty()))
             self.GetPercept()
             if self.Status == DIRTY:
                 self.CleanTile()

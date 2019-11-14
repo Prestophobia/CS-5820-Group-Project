@@ -35,6 +35,7 @@ class Agent:
 
     def GetPercept(self):
         self.Status = self.Environ.GetTile(x=self.Position[0],y=self.Position[1])
+        #assert self.Status == WALL
         self.FacingTile = self.Environ.GetTile(self.Position[0] + self.DirFacingVec[0],self.Position[1] + self.DirFacingVec[1])
 
     def Rotate(self, dir):
@@ -74,8 +75,8 @@ class Agent:
         newX = self.Position[0] + self.DirFacingVec[0]
         newY = self.Position[1] + self.DirFacingVec[1]
         if not self.Environ.Collide((newX,newY)):
-            self.Position = (self.Position[0] + self.DirFacingVec[0],self.Position[1] + self.DirFacingVec[1])
-            self.Log.append("agent position: x:{} y:{}".format(self.Position[0],self.Position[1]))
+            self.Position = (newX,newY)
+            self.Log.append("agent position: x:{} y:{}".format(newX,newY))
             return True
         else:
             self.Log.append("agent collided")

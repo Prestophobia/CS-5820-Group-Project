@@ -209,7 +209,7 @@ def main():
         # environment designed to make our agent not behave rationally
         vacuumWorld = Environment(5,5)
         vacuumWorld.RandomizeWithoutWalls()
-        vacuumWorld.SetWallsFromBinary(25056)
+        vacuumWorld.SetWallsFromBinary(16864)
         vacuumWorld.Visualize()
 
         randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
@@ -221,8 +221,34 @@ def main():
 
         print("Note how unlikely the agent is to pass around the wall with a 1 tile gap")
     elif exercise == '2.11d':
-        # TODO: Run reflex agent vs state-based agent on multiple environments and run comparison on efficiency
+        
         print('2.11d')
+
+        vacuumWorld = Environment(5,5)
+        
+        vacuumWorld.SetGridFromBinary(23821635)
+        vacuumWorld.SetWallsFromBinary(480)
+        vacuumWorld.Visualize()
+
+        vacuumWorld2 = Environment(5,5)
+        vacuumWorld.SetGridFromBinary(23821635)
+        vacuumWorld2.SetWallsFromBinary(480)
+        #vacuumWorld2.Visualize()
+
+        simpleAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
+        #stateAgent = SimpleReflexAgentWithEntireState((0,0),EAST,vacuumWorld2)
+        simpleAgent.Run()
+        simpleAgent.PrintLog()
+        #stateAgent.Run()
+        #print("With state")
+        #vacuumWorld2.Visualize()
+        print("Without state")
+        vacuumWorld.Visualize()
+        resultsWithoutState = vacuumWorld.GetPerformanceMeasure()
+        #resultsWithState = vacuumWorld2.GetPerformanceMeasure()
+
+        # TODO: Run reflex agent vs state-based agent on multiple environments and run comparison on efficiency FINISH
+
     elif exercise == '2.12a':
         # TODO: create agent that will give the wrong input on a square being clean or dirty 10% of the time
         print('2.12a')
@@ -230,9 +256,6 @@ def main():
         # TODO: create agent that will run in environment will clean square has a 10% chance of getting dirty
         print('2.12b')
 
-
-    vacuumWorld = Environment(envWidth,envHeight)
-    vacuumWorld.RandomizeWithoutWalls()
     print("done")
 
 if __name__ == "__main__":

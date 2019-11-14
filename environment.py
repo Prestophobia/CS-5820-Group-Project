@@ -32,6 +32,7 @@ class Environment:
             return self.Grid[x][y]
 
     def SetTile(self,x,y,val):
+        #assert self.Grid[x][y] == WALL and not val == WALL
         self.Grid[x][y] = val
 
     def SetTileByNumber(self,tileNumber,val):
@@ -45,7 +46,8 @@ class Environment:
         number = bin
         binDigits = self.Width * self.Height
         for b in range(0,binDigits):
-            self.SetTileByNumber(b,number%2)
+            if (number%2 != 0):
+                self.SetTileByNumber(b,DIRTY)
             number = number // 2
         self.InitialDirtyAmount = self.CountDirty()
         return
@@ -94,6 +96,7 @@ class Environment:
         return (1-(self.CountDirty()/self.InitialDirtyAmount)) * 100
 
     def RandomizeWithoutWalls(self):
+        #assert False
         for x in range(self.Width):
             for y in range(self.Height):
                 self.SetTile(x=x,y=y,val=random.randint(CLEAN,DIRTY))
@@ -102,6 +105,7 @@ class Environment:
             self.RandomizeWithoutWalls()
 
     def RandomizeWithWalls(self):
+        #assert False
         for x in range(self.Width):
             for y in range(self.Height):
                 self.SetTile(x,y,random.randint(CLEAN,WALL))
