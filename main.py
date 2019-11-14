@@ -224,28 +224,33 @@ def main():
         
         print('2.11d')
 
-        vacuumWorld = Environment(5,5)
+        simpleWorld = Environment(5,5)
+        stateWorld = Environment(5,5)
         
-        vacuumWorld.SetGridFromBinary(23821635)
-        vacuumWorld.SetWallsFromBinary(480)
-        vacuumWorld.Visualize()
+        simpleWorld.SetGridFromBinary(23821635)
+        simpleWorld.SetWallsFromBinary(480)
+        
+        stateWorld.SetGridFromBinary(23821635)
+        stateWorld.SetWallsFromBinary(480)
 
-        vacuumWorld2 = Environment(5,5)
-        vacuumWorld.SetGridFromBinary(23821635)
-        vacuumWorld2.SetWallsFromBinary(480)
-        #vacuumWorld2.Visualize()
+        simpleWorld.Visualize()
 
-        simpleAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
-        #stateAgent = SimpleReflexAgentWithEntireState((0,0),EAST,vacuumWorld2)
+        simpleAgent = SimpleReflexAgent((0,0),EAST,simpleWorld)
+        stateAgent = SimpleReflexAgentWithEntireState((0,0),EAST,stateWorld)
+
         simpleAgent.Run()
-        simpleAgent.PrintLog()
+        #TODO: make state agent work with walls
         #stateAgent.Run()
-        #print("With state")
-        #vacuumWorld2.Visualize()
+
+        print("With state")
+        stateWorld.Visualize()
+       
         print("Without state")
-        vacuumWorld.Visualize()
-        resultsWithoutState = vacuumWorld.GetPerformanceMeasure()
-        #resultsWithState = vacuumWorld2.GetPerformanceMeasure()
+        simpleWorld.Visualize()
+        
+
+        resultsWithoutState = simpleWorld.GetPerformanceMeasure()
+        resultsWithState = stateWorld.GetPerformanceMeasure()
 
         # TODO: Run reflex agent vs state-based agent on multiple environments and run comparison on efficiency FINISH
 

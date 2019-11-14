@@ -64,12 +64,11 @@ class Environment:
         self.InitialDirtyAmount = self.CountDirty()
         return
 
-    def Collide(self,pos):
+    def Collide(self,x=0,y=0):
         self.NumTurns += 1
-        if pos[0] >= self.Width or pos[1] >= self.Height:
-            self.NumCollisions += 1
-            return True
-        elif self.GetTile(pos[0],pos[1]) == WALL:
+        #assert self.NumTurns > (self.Width * self.Height * 4)
+        #print("Turns: {}".format(self.NumTurns))
+        if self.GetTile(x,y) == WALL:
             self.NumCollisions += 1
             return True
         else:
