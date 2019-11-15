@@ -8,6 +8,7 @@ from simple_reflex_agent import *
 from simple_reflex_with_state import *
 from zig_zag_vacuum import *
 from randomAgent import *
+from statebot2 import *
 
 # get direction constants for traversing vacuum world 
 from directions import *
@@ -136,18 +137,33 @@ def main():
         vacuumWorld.RandomizeWithoutWalls()
         print("Example run of simple reflex with entire state agent")
         vacuumWorld.Visualize()
+        reflexAgentState = StateBot2((0,0),EAST,vacuumWorld)
+        reflexAgentState.Run()
+        vacuumWorld.Visualize()
+
+    elif exercise == '2.10c':
+        print('2.10c')
+        print("An agent that knows the status of all clean/dirty tiles cannot be rational as it is omniscient")
+        print('Example')
+        vacuumWorld = Environment(envWidth, envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        vacuumWorld.Visualize()
         reflexAgentEntireState = SimpleReflexAgentWithEntireState((0,0),EAST,vacuumWorld)
         reflexAgentEntireState.Run()
         reflexAgentEntireState.PrintDirtyTiles()
-
-    elif exercise == '2.10c':
-    # TODO: run agent in penalized movement environment such that it can tell when nearby 
-    # squares are also clean/dirty
-        print('2.10c')
+        vacuumWorld.Visualize()
 
     elif exercise == '2.11a':
-    # TODO: run simple reflex agent in unknown environment
         print('2.11a')
+        print('A simple reflex agent can still be rational in an unknown environment, as it is still acting logically on its percepts')
+        print('Example')
+        vacuumWorld = Environment(envWidth, envHeight)
+        vacuumWorld.RandomizeWithWalls()
+        vacuumWorld.Visualize()
+        agent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
+        agent.Run()
+        vacuumWorld.Visualize()
+
     elif exercise == '2.11b':
         print('2.11b')
         #Can a simple reﬂex agent with a randomized agent function outperform a simple reﬂex agent?
@@ -236,13 +252,13 @@ def main():
         simpleWorld.Visualize()
 
         simpleAgent = SimpleReflexAgent((0,0),EAST,simpleWorld)
-        stateAgent = SimpleReflexAgentWithEntireState((0,0),EAST,stateWorld)
+        stateAgent = StateBot2((0,0),EAST,stateWorld)
 
         simpleAgent.Run()
-        #TODO: make state agent work with walls
-        #stateAgent.Run()
+        stateAgent.Run()
 
         print("With state")
+        stateAgent.PrintLog()
         stateWorld.Visualize()
        
         print("Without state")
