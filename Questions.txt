@@ -32,7 +32,7 @@
     agent’s attempts to move into an obstacle or to cross the boundaries of the environment. 
     Suppose the bump sensor stops working; how should the agent behave? 2.13 The vacuum environments in the preceding exercises have all been deterministic. 
     Discuss possible agent programs for each of the following stochastic versions: 
-        a. Murphy’s law: twenty-ﬁve percent of the time, the Suck action fails to clean the ﬂoorif itisdirty and deposits dirt onto theﬂooriftheﬂoorisclean.
+        a. Murphy’s law: twenty-ﬁve percent of the time, the Suck action fails to clean the ﬂoor if it is dirty and deposits dirt onto the ﬂoor if the ﬂoor is clean.
             How is your agent program affected if the dirt sensor gives the wrong answer 10% of the time? 
         
         b. Small children: At each time step, each clean square has a 10% chance of becoming dirty. 

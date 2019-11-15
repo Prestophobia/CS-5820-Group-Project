@@ -9,6 +9,8 @@ from simple_reflex_with_state import *
 from zig_zag_vacuum import *
 from randomAgent import *
 from statebot2 import *
+from murphyBot import *
+from faultyBot import *
 
 # get direction constants for traversing vacuum world 
 from directions import *
@@ -237,9 +239,11 @@ def main():
 
         print("Note how unlikely the agent is to pass around the wall with a 1 tile gap")
     elif exercise == '2.11d':
-        
         print('2.11d')
 
+
+        # trial 1
+        #************************************************************************************************
         simpleWorld = Environment(5,5)
         stateWorld = Environment(5,5)
         
@@ -249,6 +253,7 @@ def main():
         stateWorld.SetGridFromBinary(23821635)
         stateWorld.SetWallsFromBinary(480)
 
+        print("TRIAL 1\nBEFORE")
         simpleWorld.Visualize()
 
         simpleAgent = SimpleReflexAgent((0,0),EAST,simpleWorld)
@@ -257,22 +262,39 @@ def main():
         simpleAgent.Run()
         stateAgent.Run()
 
+        print("AFTER")
         print("With state")
-        stateAgent.PrintLog()
         stateWorld.Visualize()
        
         print("Without state")
         simpleWorld.Visualize()
         
-
         resultsWithoutState = simpleWorld.GetPerformanceMeasure()
         resultsWithState = stateWorld.GetPerformanceMeasure()
+
+        # trial 2
+        #************************************************************************************************
 
         # TODO: Run reflex agent vs state-based agent on multiple environments and run comparison on efficiency FINISH
 
     elif exercise == '2.12a':
-        # TODO: create agent that will give the wrong input on a square being clean or dirty 10% of the time
         print('2.12a')
+        vacuumWorld = Environment(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("Murphy's Law")
+        vacuumWorld.Visualize()
+        agent = MurphyBot((0,0),EAST,vacuumWorld)
+        agent.Run()
+        vacuumWorld.Visualize()
+
+        vacuumWorld = Environment(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("With a faulty dirt sensor")
+        vacuumWorld.Visualize()
+        agent = FaultyBot((0,0),EAST,vacuumWorld)
+        agent.Run()
+        vacuumWorld.Visualize()
+
     elif exercise == '2.12b':
         # TODO: create agent that will run in environment will clean square has a 10% chance of getting dirty
         print('2.12b')
