@@ -11,6 +11,7 @@ from randomAgent import *
 from statebot2 import *
 from murphyBot import *
 from faultyBot import *
+from smallChildrenEnviron import *
 
 # get direction constants for traversing vacuum world 
 from directions import *
@@ -298,6 +299,23 @@ def main():
     elif exercise == '2.12b':
         # TODO: create agent that will run in environment will clean square has a 10% chance of getting dirty
         print('2.12b')
+
+        vacuumWorld = SmallChildren(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("Small Children")
+        vacuumWorld.Visualize()
+        agent = BumpBot((0,0),EAST,vacuumWorld)
+        agent.Run()
+        vacuumWorld.Visualize()
+
+        vacuumWorld = SmallChildren(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("Using an algorithm that passes each tile exactly once:")
+        vacuumWorld.Visualize()
+        agent = ZigZagVacuum((0,0),EAST,vacuumWorld)
+        agent.Run()
+        vacuumWorld.Visualize()
+        print("Hypothetically could clean the room after infinite passes")
 
     print("done")
 
