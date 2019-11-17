@@ -1,6 +1,8 @@
 import sys
 from math import sqrt
 from math import pow
+from math import degrees
+from math import atan
 
 from directions import *
 from states import *
@@ -65,39 +67,54 @@ class SimpleReflexAgentWithEntireState(Agent):
 
         return ((targetX - currentX),(targetY - currentY))
 
+    def GetDirection(self, current, target):
+        # print("Current:" + str(current))
+        # print("Target:" + str(target))
+        if current != target:
+            if current[0] == target[0]:
+                if current[1] > target[1]:
+                    direction = NORTH
+                else:
+                    direction = SOUTH
+            elif current[1] == target[1]:
+                if current[0] > target[0]:
+                    direction = EAST
+                else:
+                    direction = WEST
+            elif current[0] > target[0]: # east
+                if current[1] > target[1]:
+                    direction = NORTHEAST
+                else:
+                    direction = SOUTHEAST
+            elif current[0] < target[0]: # west
+                if current[1] > target[1]:
+                    direction = NORTHWEST
+                else:
+                    direction = SOUTHWEST
+            elif current[1] > target[1]: # south
+                if current[0] > target[0]:
+                    direction = SOUTHEAST
+                else:
+                    direction = SOUTHWEST
+            elif current[1] < target [1]: # north
+                if current[0] > target[0]:
+                    direction = NORTHEAST
+                else:
+                    direction = NORTHWEST
+            else:
+                direction = WEST
+        else:
+            direction = WEST
+
+        return direction
+
     def MoveTo(self, target):
         if target == None:
             return
-        # print("Target=" + str(target))
-        path = self.GetPathTo(target)
-        # print("Path=" + str(path))
+
         while self.Position != target:
-            # print(str(self.Position) + "!=" + str(target))
-
-            if path[0] > 0:
-                # then we need to move west
-                self.RotateUntil(WEST)
-                self.Log.append("FacingDirection=" + str(self.DirFacingVec))
-            elif path[0] < 0:
-                # then we need to move east
-                self.RotateUntil(EAST)
-                self.Log.append("FacingDirection=" + str(self.DirFacingVec))
-
-            while self.Position[0] != target[0]: # if no change on x, we don't need to move east or west
-                self.Log.append("Trying to move on x: " + str(self.Position) + " ->" + str(target))
-                self.MoveForward()
-
-            if path[1] < 0:
-                # then we need to move north
-                self.RotateUntil(NORTH)
-            elif path[1] > 0:
-                # then we need to move south
-                self.RotateUntil(SOUTH)
-
-            while self.Position[1] != target[1]: # if no change on y, we don't need to move north or south
-                self.Log.append("Trying to move on y: " + str(self.Position) + " ->" + str(target))
-                self.Log.append("Facing Direction=" + str(self.DirFacingVec))
-                self.MoveForward()
+            self.RotateUntil(self.GetDirection(self.Position, target))
+            self.MoveForward()
         return
 
     def Run(self):
