@@ -275,8 +275,64 @@ def main():
 
         # trial 2
         #************************************************************************************************
+        simpleWorld = Environment(5,5)
+        stateWorld = Environment(5,5)
+        
+        simpleWorld.SetGridFromBinary(23821635)
+        simpleWorld.SetWallsFromBinary(145536)
+        
+        stateWorld.SetGridFromBinary(23821635)
+        stateWorld.SetWallsFromBinary(145536)
 
-        # TODO: Run reflex agent vs state-based agent on multiple environments and run comparison on efficiency FINISH
+        print("TRIAL 1\nBEFORE")
+        simpleWorld.Visualize()
+
+        simpleAgent = SimpleReflexAgent((0,0),EAST,simpleWorld)
+        stateAgent = StateBot2((0,0),EAST,stateWorld)
+
+        simpleAgent.Run()
+        stateAgent.Run()
+
+        print("AFTER")
+        print("With state")
+        stateWorld.Visualize()
+       
+        print("Without state")
+        simpleWorld.Visualize()
+        
+        resultsWithoutState = simpleWorld.GetPerformanceMeasure()
+        resultsWithState = stateWorld.GetPerformanceMeasure()
+
+        # trial 3
+        #************************************************************************************************
+        simpleWorld = Environment(5,5)
+        stateWorld = Environment(5,5)
+        
+        simpleWorld.SetGridFromBinary(23821635)
+        simpleWorld.SetWallsFromBinary(15360)
+        
+        stateWorld.SetGridFromBinary(23821635)
+        stateWorld.SetWallsFromBinary(15360)
+
+        print("TRIAL 1\nBEFORE")
+        simpleWorld.Visualize()
+
+        simpleAgent = SimpleReflexAgent((0,0),EAST,simpleWorld)
+        stateAgent = StateBot2((0,0),EAST,stateWorld)
+
+        simpleAgent.Run()
+        stateAgent.Run()
+
+        print("AFTER")
+        print("With state")
+        stateWorld.Visualize()
+       
+        print("Without state")
+        simpleWorld.Visualize()
+        
+        resultsWithoutState = simpleWorld.GetPerformanceMeasure()
+        resultsWithState = stateWorld.GetPerformanceMeasure()
+
 
     elif exercise == '2.12a':
         print('2.12a')
@@ -297,7 +353,6 @@ def main():
         vacuumWorld.Visualize()
 
     elif exercise == '2.12b':
-        # TODO: create agent that will run in environment will clean square has a 10% chance of getting dirty
         print('2.12b')
 
         vacuumWorld = SmallChildren(envWidth,envHeight)
