@@ -68,8 +68,8 @@ class SimpleReflexAgentWithEntireState(Agent):
         return ((targetX - currentX),(targetY - currentY))
 
     def GetDirection(self, current, target):
-        print("Current:" + str(current))
-        print("Target:" + str(target))
+        # print("Current:" + str(current))
+        # print("Target:" + str(target))
         if current != target:
             if current[0] == target[0]:
                 if current[1] > target[1]:
