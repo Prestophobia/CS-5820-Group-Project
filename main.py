@@ -16,26 +16,6 @@ from smallChildrenEnviron import *
 # get direction constants for traversing vacuum world 
 from directions import *
 
-#sets up environment and agent for penalized movement
-def twoPointTen(envWidth,envHeight):
-        vacuumWorld = Environment(envWidth,envHeight)
-        vacuumWorld.RandomizeWithoutWalls()
-        print("Example run of simple reflex agent")
-        vacuumWorld.Visualize()
-        reflexAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
-        reflexAgent.Run()
-        reflexAgent.PrintLog()
-        vacuumWorld.Visualize()
-        
-        # print header, run all variations of environment traversal
-        print("\nResults of running through all possible variations:")
-        results=reflexAgent.RunAllEnvironVariations()
-
-        # print the results from running all environment traversals
-        print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
-        print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
-        print("Score\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["scoreAvg"],results["scoreMin"],results["scoreMax"]))
-
 
 def main():
     # get all arguements from the command line
@@ -130,7 +110,24 @@ def main():
     elif exercise == '2.10a':
     # runs the simple reflex agent in the penalized movement environment
         print('2.10a')
-        twoPointTen(envWidth,envHeight)
+        print('Simple reflex agent in random environment with penalized movement')
+        vacuumWorld = Environment(envWidth,envHeight)
+        vacuumWorld.RandomizeWithoutWalls()
+        print("Example run of simple reflex agent")
+        vacuumWorld.Visualize()
+        reflexAgent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
+        reflexAgent.Run()
+        reflexAgent.PrintLog()
+        vacuumWorld.Visualize()
+        
+        # print header, run all variations of environment traversal
+        print("\nResults of running through all possible variations:")
+        results=reflexAgent.RunAllEnvironVariations()
+
+        # print the results from running all environment traversals
+        print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
+        print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
+        print("Score\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["scoreAvg"],results["scoreMin"],results["scoreMax"]))
 
 
     elif exercise == '2.10b':
@@ -143,6 +140,15 @@ def main():
         reflexAgentState = StateBot2((0,0),EAST,vacuumWorld)
         reflexAgentState.Run()
         vacuumWorld.Visualize()
+
+        # print header, run all variations of environment traversal
+        print("\nResults of running through all possible variations:")
+        results=reflexAgentState.RunAllEnvironVariations()
+
+        # print the results from running all environment traversals
+        print("Percent Clean\nAvg:{}%\tMin:{}%\tMax:{}%\n".format(results["cleanAvg"],results["cleanMin"],results["cleanMax"]))
+        print("Steps Taken\nAvg:{}\tMin:{}\tMax:{}\n".format(results["stepsAvg"],results["stepsMin"],results["stepsMax"]))
+        print("Score\nAvg:{}\tMin:{}\tMax:{}\n\n".format(results["scoreAvg"],results["scoreMin"],results["scoreMax"]))
 
     elif exercise == '2.10c':
         print('2.10c')
@@ -173,6 +179,7 @@ def main():
 
     elif exercise == '2.11b':
         print('2.11b')
+        print('Random Agent')
         #Can a simple reﬂex agent with a randomized agent function outperform a simple reﬂex agent?
         #Design such an agent and measure its performance on several environments.
         print('NOTE: 2 in the grid represents a wall')
@@ -280,7 +287,7 @@ def main():
         stateWorld.SetGridFromBinary(23821635)
         stateWorld.SetWallsFromBinary(145536)
 
-        print("TRIAL 1\nBEFORE")
+        print("TRIAL 2\nBEFORE")
         simpleWorld.Visualize()
 
         simpleAgent = SimpleReflexAgent((0,0),EAST,simpleWorld)
@@ -310,7 +317,7 @@ def main():
         stateWorld.SetGridFromBinary(23821635)
         stateWorld.SetWallsFromBinary(15360)
 
-        print("TRIAL 1\nBEFORE")
+        print("TRIAL 3\nBEFORE")
         simpleWorld.Visualize()
 
         simpleAgent = SimpleReflexAgent((0,0),EAST,simpleWorld)
