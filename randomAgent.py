@@ -13,10 +13,14 @@ class RandomAgent(Agent):
         if self.PrintMovements:
             print("agent starting position: x:{} y:{}".format(self.Position[0],self.Position[1]))
             print("agent starting direction: x:{} y:{}".format(self.DirFacingVec[0],self.DirFacingVec[1]))
-        for step in range(maxSteps):
+
+        while running:
+            if self.Environ.CountDirty() <= 0 or maxSteps <= 0:
+                running = False
             self.CleanTile()
             r = random.randint(0,7)
             for rotations in range(r):
                 self.Rotate(CW)
             self.MoveForward()
+            maxSteps -= 1
         return

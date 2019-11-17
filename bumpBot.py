@@ -54,7 +54,7 @@ class BumpBot(Agent):
                 self.State = MOVING
 
             
-            if self.Battery <= 0:
+            if self.Battery <= 0 or self.Environ.CountDirty() <= 0:
                 running = False
 
 

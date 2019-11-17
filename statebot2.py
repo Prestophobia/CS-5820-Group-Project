@@ -24,6 +24,7 @@ class StateBot2(Agent):
             print("agent starting position: x:{} y:{}".format(self.Position[0],self.Position[1]))
             print("agent starting direction: x:{} y:{}".format(self.DirFacingVec[0],self.DirFacingVec[1]))
         while running:
+            
             self.GetPercept()
             
             if self.State == IDLE:
@@ -57,6 +58,9 @@ class StateBot2(Agent):
 
             
             if self.Battery <= 0:
+                running = False
+
+            if self.Environ.CountDirty() <= 0:
                 running = False
 
 

@@ -37,3 +37,5 @@ class ZigZagVacuum(Agent):
                     self.Rotate(rotationDir) # <
             else:
                 self.MoveForward()
+            if self.Environ.CountDirty() <= 0:
+                running = False

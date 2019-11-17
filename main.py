@@ -138,7 +138,7 @@ def main():
         print('2.10b')
         vacuumWorld = Environment(envWidth, envHeight)
         vacuumWorld.RandomizeWithoutWalls()
-        print("Example run of simple reflex with entire state agent")
+        print("Example run of simple reflex agent with state")
         vacuumWorld.Visualize()
         reflexAgentState = StateBot2((0,0),EAST,vacuumWorld)
         reflexAgentState.Run()
@@ -150,10 +150,12 @@ def main():
         print('Example')
         vacuumWorld = Environment(envWidth, envHeight)
         vacuumWorld.RandomizeWithoutWalls()
+        print('BEFORE')
         vacuumWorld.Visualize()
         reflexAgentEntireState = SimpleReflexAgentWithEntireState((0,0),EAST,vacuumWorld)
         reflexAgentEntireState.Run()
         reflexAgentEntireState.PrintDirtyTiles()
+        print('AFTER')
         vacuumWorld.Visualize()
 
     elif exercise == '2.11a':
@@ -162,9 +164,11 @@ def main():
         print('Example')
         vacuumWorld = Environment(envWidth, envHeight)
         vacuumWorld.RandomizeWithWalls()
+        print('BEFORE')
         vacuumWorld.Visualize()
         agent = SimpleReflexAgent((0,0),EAST,vacuumWorld)
         agent.Run()
+        print('AFTER')
         vacuumWorld.Visualize()
 
     elif exercise == '2.11b':
@@ -175,38 +179,28 @@ def main():
         vacuumWorld = Environment(5,5)
         vacuumWorld.RandomizeWithoutWalls()
         vacuumWorld.SetWallsFromBinary(9439748)
+        print('BEFORE')
         vacuumWorld.Visualize()
 
         randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
         randomAgent.Run()
 
         #randomAgent.PrintLog()
-
-        vacuumWorld.Visualize()
-
-        vacuumWorld = Environment(5,5)
-        vacuumWorld.RandomizeWithoutWalls()
-        vacuumWorld.SetWallsFromBinary(9439748)
-        vacuumWorld.Visualize()
-
-        randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
-        randomAgent.Run()
-
-        #randomAgent.PrintLog()
-
+        print('AFTER')
         vacuumWorld.Visualize()
         print("*******************************************")
 
         vacuumWorld = Environment(5,5)
         vacuumWorld.RandomizeWithoutWalls()
         vacuumWorld.SetWallsFromBinary(145536)
+        print('BEFORE')
         vacuumWorld.Visualize()
 
         randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
         randomAgent.Run()
 
         #randomAgent.PrintLog()
-
+        print('AFTER')
         vacuumWorld.Visualize()
 
         print("*******************************************")
@@ -214,12 +208,14 @@ def main():
         vacuumWorld = Environment(5,5)
         vacuumWorld.RandomizeWithoutWalls()
         vacuumWorld.SetWallsFromBinary(15360)
+        print('BEFORE')
         vacuumWorld.Visualize()
 
         randomAgent = RandomAgent((0,0),EAST,vacuumWorld)
         randomAgent.Run()
 
         #randomAgent.PrintLog()
+        print('AFTER')
 
         vacuumWorld.Visualize()
 
