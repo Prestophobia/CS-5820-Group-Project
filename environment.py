@@ -2,6 +2,9 @@ import random
 
 from states import *
 
+CLEAN_WEIGHT = 1
+STEPS_WEIGHT = 0.2
+
 class Environment:
     Grid = []
     Width = 0
@@ -113,7 +116,7 @@ class Environment:
             self.RandomizeWithWalls()
 
     def GetPerformanceMeasure(self):
-        perfmeasure = {"collisions":self.NumCollisions,"numTurns":self.NumTurns,"percentClean":self.GetPercentClean(),"score":self.GetPercentClean()/max(self.NumTurns,1)}
+        perfmeasure = {"collisions":self.NumCollisions,"numTurns":self.NumTurns,"percentClean":self.GetPercentClean(),"score":((self.GetPercentClean() * CLEAN_WEIGHT) - (max(self.NumTurns,1)* STEPS_WEIGHT))}
         return perfmeasure
 
     def Visualize(self):
