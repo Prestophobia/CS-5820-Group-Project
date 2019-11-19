@@ -2,7 +2,7 @@ python3 main.py --width 5 --height 5 --exercise 2.8
 PAUSE
 python3 main.py --width 3 --height 3 --exercise 2.9
 PAUSE
-python3 main.py --width 5 --height 5 --exercise 2.10a
+python3 main.py --width 3 --height 3 --exercise 2.10a
 PAUSE
 python3 main.py --width 5 --height 5 --exercise 2.10b
 PAUSE
