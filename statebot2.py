@@ -53,6 +53,12 @@ class StateBot2(Agent):
                 self.Log.append("State: TURNING")
                 self.Rotate(CCW)
                 self.GetPercept()
+                for r in range(8):
+                    self.Rotate(CCW)
+                    self.GetPercept()
+                    if self.FacingTile == DIRTY:
+                        self.State = MOVING
+                        break
                 if self.FacingTile < WALL:
                     self.State = MOVING
 
