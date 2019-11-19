@@ -117,7 +117,7 @@ class Agent:
                     results = self.Environ.GetPerformanceMeasure()
                     #print(results)
                     cleanTotal += results['percentClean']
-                    assert results['percentClean']>=0
+                    #assert results['percentClean']>=0
                     if results['percentClean'] > cleanMax:
                         cleanMax = results['percentClean']
                     if results['percentClean'] < cleanMin:
@@ -131,7 +131,7 @@ class Agent:
                         stepsMin = results['numTurns']
 
                     scoreTotal += results['score']
-                    assert results['score']>=0
+                    #assert results['score']>=0
                     if results['score'] > scoreMax:
                         scoreMax = results['score']
                     if results['score'] < scoreMin:
@@ -173,21 +173,21 @@ class Agent:
                     results = self.Environ.GetPerformanceMeasure()
                     #print(results)
                     cleanTotal += results['percentClean']
-                    assert results['percentClean']>=0
+                    #assert results['percentClean']>=0
                     if results['percentClean'] > cleanMax:
                         cleanMax = results['percentClean']
                     if results['percentClean'] < cleanMin:
                         cleanMin = results['percentClean']
 
                     stepsTotal += results['numTurns']
-                    assert results['numTurns']>=0
+                    #assert results['numTurns']>=0
                     if results['numTurns'] > stepsMax:
                         stepsMax = results['numTurns']
                     if results['numTurns'] < stepsMin:
                         stepsMin = results['numTurns']
 
                     scoreTotal += results['score']
-                    assert results['score']>=0
+                    #assert results['score']>=0
                     if results['score'] > scoreMax:
                         scoreMax = results['score']
                     if results['score'] < scoreMin:
