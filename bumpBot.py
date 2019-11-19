@@ -51,6 +51,11 @@ class BumpBot(Agent):
             elif self.State == TURNING:
                 self.Log.append("State: TURNING")
                 self.Rotate(CCW)
+                for r in range(8):
+                    self.Rotate(CCW)
+                    self.GetPercept()
+                    if self.FacingTile == DIRTY:
+                        break
                 self.State = MOVING
 
             
